@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hindi / Marathi Font Converter Studio</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Latin + Devanagari fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&family=Hind:wght@300;400;500;600;700&family=Kalam:wght@300;400;700&family=Yatra+One&family=Tillana:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@100..900&family=Noto+Serif+Devanagari:wght@100..900&family=Baloo+2:wght@400..800&family=Baloo+Bhai+2:wght@400..800&family=Rajdhani:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=Mukta:wght@200;300;400;500;600;700;800&family=Khand:wght@300;400;500;600;700&family=Gotu&display=swap" rel="stylesheet">
+
+  <!-- Sanscript transliteration library -->
+  <script src="https://cdn.jsdelivr.net/npm/sanscriptjs@0.0.1/sanscript.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#0f172a;
+      --panel:#111827;
+      --panel2:#1f2937;
+      --soft:#334155;
+      --text:#f8fafc;
+      --muted:#cbd5e1;
+      --accent:#22c55e;
+      --accent2:#38bdf8;
+      --danger:#ef4444;
+      --card:#0b1220;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --radius:20px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:'Poppins', sans-serif;
+      background:linear-gradient(135deg,#020617,#0f172a,#111827);
+      color:var(--text);
+      min-height:100vh;
+      padding:24px;
+    }
+
+    .container{
+      max-width:1400px;
+      margin:0 auto;
+    }
+
+    .hero{
+      text-align:center;
+      margin-bottom:24px;
+      padding:26px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+      border-radius:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .hero h1{
+      font-size:clamp(28px,4vw,48px);
+      line-height:1.1;
+      margin-bottom:10px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      max-width:900px;
+      margin:0 auto;
+      font-size:15px;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap:24px;
+    }
+
+    @media (max-width: 980px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .panel{
+      background:rgba(15,23,42,.72);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .panel-title{
+      font-size:20px;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
+    .sub{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:14px;
+      line-height:1.6;
+    }
+
+    textarea{
+      width:100%;
+      min-height:120px;
+      resize:vertical;
+      border:none;
+      outline:none;
+      border-radius:16px;
+      padding:16px;
+      background:#020817;
+      color:white;
+      border:1px solid var(--border);
+      font-size:18px;
+      line-height:1.6;
+      font-family:'Inter', sans-serif;
+    }
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin:16px 0;
+    }
+
+    .toolbar select,
+    .toolbar button,
+    .toolbar input{
+      border:none;
+      outline:none;
+      border-radius:14px;
+      padding:12px 14px;
+      background:#0b1220;
+      color:white;
+      border:1px solid var(--border);
+      font-size:14px;
+    }
+
+    .toolbar button{
+      cursor:pointer;
+      transition:.25s ease;
+      font-weight:600;
+    }
+
+    .toolbar button:hover{
+      transform:translateY(-2px);
+      background:#162033;
+    }
+
+    .toolbar .primary{
+      background:linear-gradient(135deg,var(--accent),#16a34a);
+      color:#04130a;
+    }
+
+    .toolbar .secondary{
+      background:linear-gradient(135deg,var(--accent2),#0284c7);
+      color:#02131b;
+    }
+
+    .toolbar .danger{
+      background:linear-gradient(135deg,#fb7185,var(--danger));
+      color:white;
+    }
+
+    .output-box{
+      min-height:180px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:#020817;
+      padding:18px;
+      line-height:1.8;
+      font-size:30px;
+      word-break:break-word;
+      transition:.25s ease;
+    }
+
+    .meta-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    @media (max-width:700px){
+      .meta-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .mini-card{
+      background:#0b1220;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .mini-card h4{
+      margin-bottom:8px;
+      font-size:14px;
+      color:#93c5fd;
+    }
+
+    .mini-card p{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .font-controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin:18px 0 10px;
+    }
+
+    .font-controls label{
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background:#0b1220;
+      border:1px solid var(--border);
+      padding:10px 12px;
+      border-radius:12px;
+    }
+
+    .font-controls input[type="range"]{
+      width:140px;
+    }
+
+    .font-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+      gap:14px;
+      max-height:780px;
+      overflow:auto;
+      padding-right:4px;
+    }
+
+    .font-card{
+      background:linear-gradient(180deg,#07101f,#0b1220);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:14px;
+      cursor:pointer;
+      transition:.25s ease;
+      position:relative;
+    }
+
+    .font-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(255,255,255,.18);
+    }
+
+    .font-card.active{
+      outline:2px solid #22c55e;
+      transform:translateY(-2px);
+    }
+
+    .font-name{
+      font-weight:700;
+      font-size:14px;
+      margin-bottom:10px;
+      color:#e2e8f0;
+    }
+
+    .font-preview{
+      font-size:22px;
+      line-height:1.6;
+      margin-bottom:8px;
+    }
+
+    .font-preview.small{
+      font-size:18px;
+    }
+
+    .font-tag{
+      display:inline-block;
+      font-size:11px;
+      padding:5px 8px;
+      border-radius:999px;
+      background:rgba(56,189,248,.12);
+      color:#93c5fd;
+      margin-top:6px;
+    }
+
+    .footer-note{
+      margin-top:16px;
+      font-size:12px;
+      color:#94a3b8;
+      line-height:1.6;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      background:#172033;
+      color:#cbd5e1;
+      border:1px solid var(--border);
+      cursor:pointer;
+    }
+
+    .label{
+      font-size:13px;
+      color:#93c5fd;
+      margin-bottom:8px;
+      display:block;
+      font-weight:600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>Hindi / Marathi Font Converter Studio</h1>
+      <p>
+        Hinglish, English ya Hindi likho. Niche live preview milega. Font card pe click karo aur text alag-alag fonts me dekh lo.
+        Hindi aur Marathi dono Devanagari use karte hain, isliye Marathi-friendly fonts bhi diye gaye hain.
+      </p>
+    </section>
+
+    <div class="layout">
+      <!-- LEFT -->
+      <section class="panel">
+        <h2 class="panel-title">Type / Convert Area</h2>
+        <p class="sub">
+          Hinglish likho jaise <b>mera naam surendra hai</b>, phir Hindi ya Marathi-style Devanagari preview dekh lo.
+        </p>
+
+        <label class="label">Input Box</label>
+        <textarea id="inputText" placeholder="Yahan Hinglish / English / Hindi likho...">surendra</textarea>
+
+        <div class="toolbar">
+          <select id="inputMode">
+            <option value="auto">Auto Detect</option>
+            <option value="latin">English / Hinglish</option>
+            <option value="devanagari">Hindi / Marathi (Devanagari)</option>
+          </select>
+
+          <select id="outputMode">
+            <option value="hindi">Convert to Hindi</option>
+            <option value="marathi">Convert to Marathi-style</option>
+            <option value="raw">Keep Original</option>
+          </select>
+
+          <button class="primary" id="convertBtn">Convert</button>
+          <button class="secondary" id="copyBtn">Copy Output</button>
+          <button class="danger" id="clearBtn">Clear</button>
+        </div>
+
+        <div class="chips">
+          <div class="chip" data-sample="surendra">surendra</div>
+          <div class="chip" data-sample="mera naam surendra hai">mera naam surendra hai</div>
+          <div class="chip" data-sample="जिंदगी में मिलने वाला हर शख्स होली सा होता है">जिंदगी में मिलने वाला हर शख्स होली सा होता है</div>
+          <div class="chip" data-sample="सुरेंद्र">सुरेंद्र</div>
+          <div class="chip" data-sample="shubh holi">shubh holi</div>
+        </div>
+
+        <div class="font-controls">
+          <label>
+            Font Size
+            <input type="range" id="fontSize" min="18" max="72" value="30" />
+          </label>
+
+          <label>
+            Font Weight
+            <input type="range" id="fontWeight" min="300" max="900" step="100" value="500" />
+          </label>
+
+          <label>
+            Letter Space
+            <input type="range" id="letterSpace" min="0" max="8" step="0.5" value="0" />
+          </label>
+        </div>
+
+        <label class="label">Output Box</label>
+        <div id="outputBox" class="output-box">सुरेंद्र</div>
+
+        <div class="meta-grid">
+          <div class="mini-card">
+            <h4>Selected Font</h4>
+            <p id="selectedFontName">Noto Sans Devanagari</p>
+          </div>
+          <div class="mini-card">
+            <h4>Hindi Preview</h4>
+            <p id="hindiPreview">सुरेंद्र</p>
+          </div>
+          <div class="mini-card">
+            <h4>Marathi-style Preview</h4>
+            <p id="marathiPreview">सुरेंद्र</p>
+          </div>
+        </div>
+
+        <p class="footer-note">
+          Tip: Marathi ke liye mostly alag script conversion ki jagah Marathi-supporting Devanagari fonts use kiye jaate hain.
+          Is demo me frontend-only transliteration + font switching diya gaya hai.
+        </p>
+      </section>
+
+      <!-- RIGHT -->
+      <section class="panel">
+        <h2 class="panel-title">Font Gallery</h2>
+        <p class="sub">
+          Har card me upar font ka naam hai, aur niche us font me <b>Surendra / सुरेंद्र</b> ka sample.
+          Kisi bhi card pe click karo to niche output box usi font me ho jayega.
+        </p>
+
+        <div id="fontGrid" class="font-grid"></div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const fonts = [
+      { name: "Noto Sans Devanagari", css: "'Noto Sans Devanagari', sans-serif", tag: "Clean Hindi" },
+      { name: "Noto Serif Devanagari", css: "'Noto Serif Devanagari', serif", tag: "Classic Serif" },
+      { name: "Tiro Devanagari Hindi", css: "'Tiro Devanagari Hindi', serif", tag: "Elegant Hindi" },
+      { name: "Hind", css: "'Hind', sans-serif", tag: "Simple UI" },
+      { name: "IBM Plex Sans Devanagari", css: "'IBM Plex Sans Devanagari', sans-serif", tag: "Modern Pro" },
+      { name: "Mukta", css: "'Mukta', sans-serif", tag: "Rounded Clean" },
+      { name: "Baloo 2", css: "'Baloo 2', cursive", tag: "Playful" },
+      { name: "Baloo Bhai 2", css: "'Baloo Bhai 2', cursive", tag: "Bold Round" },
+      { name: "Kalam", css: "'Kalam', cursive", tag: "Handwritten" },
+      { name: "Tillana", css: "'Tillana', cursive", tag: "Decorative" },
+      { name: "Yatra One", css: "'Yatra One', cursive", tag: "Poster Style" },
+      { name: "Rajdhani", css: "'Rajdhani', sans-serif", tag: "Tech Look" },
+      { name: "Teko", css: "'Teko', sans-serif", tag: "Strong Header" },
+      { name: "Khand", css: "'Khand', sans-serif", tag: "Compact Bold" },
+      { name: "Gotu", css: "'Gotu', sans-serif", tag: "Stylish Minimal" },
+      { name: "Poppins", css: "'Poppins', sans-serif", tag: "English UI" },
+      { name: "Inter", css: "'Inter', sans-serif", tag: "Neutral UI" }
+    ];
+
+    const inputText = document.getElementById("inputText");
+    const inputMode = document.getElementById("inputMode");
+    const outputMode = document.getElementById("outputMode");
+    const convertBtn = document.getElementById("convertBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const outputBox = document.getElementById("outputBox");
+    const fontGrid = document.getElementById("fontGrid");
+    const selectedFontName = document.getElementById("selectedFontName");
+    const hindiPreview = document.getElementById("hindiPreview");
+    const marathiPreview = document.getElementById("marathiPreview");
+    const fontSize = document.getElementById("fontSize");
+    const fontWeight = document.getElementById("fontWeight");
+    const letterSpace = document.getElementById("letterSpace");
+
+    let activeFont = fonts[0];
+
+    function isDevanagariText(text) {
+      return /[\u0900-\u097F]/.test(text);
+    }
+
+    function normalizeHindi(text) {
+      return text
+        .replace(/\bmarathi\b/gi, "मराठी")
+        .replace(/\bhindi\b/gi, "हिंदी");
+    }
+
+    function translitLatinToHindi(text) {
+      try {
+        // Basic usage with sanscript
+        // ITRANS-style transliteration works better than natural Hinglish,
+        // so we also add a small fallback dictionary below.
+        let result = Sanscript.t(text, "itrans", "devanagari");
+        if (result && result !== text) return result;
+      } catch (e) {}
+
+      // fallback smart replacements for common words
+      const map = {
+        "surendra": "सुरेंद्र",
+        "mera": "मेरा",
+        "naam": "नाम",
+        "hai": "है",
+        "main": "मैं",
+        "mai": "मैं",
+        "shubh": "शुभ",
+        "holi": "होली",
+        "namaste": "नमस्ते",
+        "dost": "दोस्त",
+        "pyar": "प्यार",
+        "zindagi": "ज़िंदगी",
+        "jindagi": "जिंदगी"
+      };
+
+      return text.split(/\b/).map(token => {
+        const key = token.toLowerCase();
+        return map[key] || token;
+      }).join("");
+    }
+
+    function hindiToMarathiStyle(text) {
+      // Hindi and Marathi use Devanagari.
+      // Frontend-only practical approach: keep script same, normalize a few words if desired.
+      return text
+        .replace(/हिंदी/g, "मराठी")
+        .replace(/मेरा नाम/g, "माझं नाव")
+        .replace(/मेरा/g, "माझं")
+        .replace(/नाम/g, "नाव")
+        .replace(/है/g, "आहे");
+    }
+
+    function convertText() {
+      const raw = inputText.value.trim();
+      if (!raw) {
+        outputBox.textContent = "";
+        hindiPreview.textContent = "";
+        marathiPreview.textContent = "";
+        return;
+      }
+
+      let detectedMode = inputMode.value;
+      if (detectedMode === "auto") {
+        detectedMode = isDevanagariText(raw) ? "devanagari" : "latin";
+      }
+
+      let hindiText = raw;
+      if (detectedMode === "latin") {
+        hindiText = translitLatinToHindi(raw);
+      } else {
+        hindiText = normalizeHindi(raw);
+      }
+
+      let marathiText = hindiToMarathiStyle(hindiText);
+      let finalText = raw;
+
+      if (outputMode.value === "hindi") finalText = hindiText;
+      else if (outputMode.value === "marathi") finalText = marathiText;
+      else finalText = raw;
+
+      outputBox.textContent = finalText;
+      hindiPreview.textContent = hindiText;
+      marathiPreview.textContent = marathiText;
+    }
+
+    function applyFont(fontObj) {
+      activeFont = fontObj;
+      outputBox.style.fontFamily = fontObj.css;
+      selectedFontName.textContent = fontObj.name;
+      document.querySelectorAll(".font-card").forEach(card => {
+        card.classList.remove("active");
+        if (card.dataset.fontName === fontObj.name) {
+          card.classList.add("active");
+        }
+      });
+    }
+
+    function renderFontCards() {
+      fontGrid.innerHTML = "";
+      fonts.forEach((font, index) => {
+        const card = document.createElement("div");
+        card.className = "font-card" + (index === 0 ? " active" : "");
+        card.dataset.fontName = font.name;
+        card.innerHTML = `
+          <div class="font-name">${font.name}</div>
+          <div class="font-preview" style="font-family:${font.css};">Surendra</div>
+          <div class="font-preview small" style="font-family:${font.css};">सुरेंद्र</div>
+          <span class="font-tag">${font.tag}</span>
+        `;
+        card.addEventListener("click", () => {
+          applyFont(font);
+          convertText();
+        });
+        fontGrid.appendChild(card);
+      });
+    }
+
+    function bindControls() {
+      convertBtn.addEventListener("click", convertText);
+
+      inputText.addEventListener("input", convertText);
+      inputMode.addEventListener("change", convertText);
+      outputMode.addEventListener("change", convertText);
+
+      copyBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(outputBox.textContent);
+          copyBtn.textContent = "Copied!";
+          setTimeout(() => copyBtn.textContent = "Copy Output", 1200);
+        } catch (e) {
+          alert("Copy failed");
+        }
+      });
+
+      clearBtn.addEventListener("click", () => {
+        inputText.value = "";
+        outputBox.textContent = "";
+        hindiPreview.textContent = "";
+        marathiPreview.textContent = "";
+      });
+
+      fontSize.addEventListener("input", () => {
+        outputBox.style.fontSize = fontSize.value + "px";
+      });
+
+      fontWeight.addEventListener("input", () => {
+        outputBox.style.fontWeight = fontWeight.value;
+      });
+
+      letterSpace.addEventListener("input", () => {
+        outputBox.style.letterSpacing = letterSpace.value + "px";
+      });
+
+      document.querySelectorAll(".chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          inputText.value = chip.dataset.sample;
+          convertText();
+        });
+      });
+    }
+
+    renderFontCards();
+    bindControls();
+    applyFont(fonts[0]);
+    convertText();
+  </script>
+</body>
+</html>
