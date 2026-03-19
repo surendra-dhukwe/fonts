@@ -3,634 +3,1202 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hindi / Marathi Font Converter Studio</title>
+  <title>Font Studio Pro Max</title>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Latin + Devanagari fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&family=Hind:wght@300;400;500;600;700&family=Kalam:wght@300;400;700&family=Yatra+One&family=Tillana:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@100..900&family=Noto+Serif+Devanagari:wght@100..900&family=Baloo+2:wght@400..800&family=Baloo+Bhai+2:wght@400..800&family=Rajdhani:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=Mukta:wght@200;300;400;500;600;700;800&family=Khand:wght@300;400;500;600;700&family=Gotu&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Hind:wght@400;500;600;700&family=Mukta:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Noto+Serif+Devanagari:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi:ital@0;1&family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=Kalam:wght@400;700&family=Yatra+One&family=Tillana:wght@400;600;700;800&family=Baloo+2:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&family=Teko:wght@400;500;600;700&family=Khand:wght@400;500;600;700&family=Gotu&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Orbitron:wght@400;500;600;700&family=Josefin+Sans:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Anton&family=Bebas+Neue&family=Exo+2:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Urbanist:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&family=Rubik:wght@400;500;600;700&family=Barlow:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&family=Archivo:wght@400;500;600;700&family=Fjalla+One&family=Abel&family=Archivo+Black&family=Signika:wght@400;500;600;700&family=Questrial&family=Asap:wght@400;500;600;700&family=Cabin:wght@400;500;600;700&family=Heebo:wght@400;500;700;800&family=Kanit:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Crimson+Text:wght@400;600;700&family=Cardo:wght@400;700&family=Amatic+SC:wght@400;700&family=Pacifico&family=Satisfy&family=Great+Vibes&family=Courgette&family=Marck+Script&family=Permanent+Marker&family=Righteous&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Sanscript transliteration library -->
+  <script src="https://cdn.jsdelivr.net/npm/fabric@5.3.0/dist/fabric.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sanscriptjs@0.0.1/sanscript.min.js"></script>
 
   <style>
     :root{
-      --bg:#0f172a;
-      --panel:#111827;
-      --panel2:#1f2937;
-      --soft:#334155;
+      --bg:#08101d;
+      --panel:#111b2f;
+      --line:rgba(255,255,255,.08);
+      --line2:rgba(255,255,255,.13);
       --text:#f8fafc;
-      --muted:#cbd5e1;
-      --accent:#22c55e;
-      --accent2:#38bdf8;
+      --muted:#9fb0c9;
+      --accent:#4f46e5;
+      --accent2:#06b6d4;
+      --success:#22c55e;
+      --warning:#f59e0b;
       --danger:#ef4444;
-      --card:#0b1220;
-      --border:rgba(255,255,255,.08);
-      --shadow:0 10px 30px rgba(0,0,0,.25);
-      --radius:20px;
+      --shadow:0 12px 30px rgba(0,0,0,.3);
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
+    *{box-sizing:border-box;margin:0;padding:0}
 
     body{
-      font-family:'Poppins', sans-serif;
-      background:linear-gradient(135deg,#020617,#0f172a,#111827);
+      font-family:'Inter',sans-serif;
       color:var(--text);
       min-height:100vh;
-      padding:24px;
+      padding:14px;
+      background:
+        radial-gradient(circle at top left, rgba(79,70,229,.20), transparent 30%),
+        radial-gradient(circle at top right, rgba(6,182,212,.14), transparent 30%),
+        linear-gradient(135deg,#060b15,#0a1220 45%,#101a2b 100%);
     }
 
-    .container{
-      max-width:1400px;
-      margin:0 auto;
-    }
+    .app{max-width:1500px;margin:0 auto}
 
-    .hero{
-      text-align:center;
-      margin-bottom:24px;
-      padding:26px;
-      border:1px solid var(--border);
-      background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-      border-radius:28px;
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 18px;
+      background:rgba(17,27,47,.95);
+      border:1px solid var(--line);
+      border-radius:22px;
       box-shadow:var(--shadow);
+      margin-bottom:16px;
+      flex-wrap:wrap;
     }
 
-    .hero h1{
-      font-size:clamp(28px,4vw,48px);
-      line-height:1.1;
-      margin-bottom:10px;
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      font-weight:800;box-shadow:0 10px 22px rgba(79,70,229,.35);
     }
 
-    .hero p{
-      color:var(--muted);
-      max-width:900px;
-      margin:0 auto;
-      font-size:15px;
-    }
+    .brand h1{font-size:18px;font-weight:800}
+    .brand p{font-size:12px;color:var(--muted);margin-top:2px}
 
     .layout{
       display:grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap:24px;
+      grid-template-columns:320px 1fr 290px;
+      gap:16px;
     }
 
-    @media (max-width: 980px){
-      .layout{
-        grid-template-columns:1fr;
-      }
+    @media (max-width:1200px){
+      .layout{grid-template-columns:1fr}
     }
 
     .panel{
-      background:rgba(15,23,42,.72);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:20px;
+      background:rgba(17,27,47,.94);
+      border:1px solid var(--line);
+      border-radius:22px;
       box-shadow:var(--shadow);
-      backdrop-filter: blur(12px);
+      overflow:hidden;
     }
 
-    .panel-title{
-      font-size:20px;
-      font-weight:700;
-      margin-bottom:14px;
+    .panel-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0));
     }
 
-    .sub{
-      color:var(--muted);
+    .panel-head h2{
       font-size:13px;
+      font-weight:800;
+      letter-spacing:.5px;
+    }
+
+    .panel-body{padding:14px}
+
+    .menu-group{
       margin-bottom:14px;
-      line-height:1.6;
+      padding:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      border-radius:16px;
+    }
+
+    .menu-group h3{
+      font-size:11px;
+      color:#dbe7f5;
+      margin-bottom:10px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.7px;
+    }
+
+    label{
+      display:block;
+      font-size:11px;
+      color:#9fb2d0;
+      margin-bottom:6px;
+      font-weight:700;
+    }
+
+    input[type="text"], input[type="number"], textarea, select, input[type="color"]{
+      width:100%;
+      background:#0b1323;
+      border:1px solid var(--line2);
+      color:white;
+      outline:none;
+      border-radius:12px;
+      padding:10px 12px;
+      font-size:13px;
     }
 
     textarea{
-      width:100%;
-      min-height:120px;
+      min-height:90px;
       resize:vertical;
+      line-height:1.5;
+      font-family:'Inter',sans-serif;
+    }
+
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+
+    .btn{
       border:none;
       outline:none;
-      border-radius:16px;
-      padding:16px;
-      background:#020817;
-      color:white;
-      border:1px solid var(--border);
-      font-size:18px;
-      line-height:1.6;
-      font-family:'Inter', sans-serif;
-    }
-
-    .toolbar{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin:16px 0;
-    }
-
-    .toolbar select,
-    .toolbar button,
-    .toolbar input{
-      border:none;
-      outline:none;
-      border-radius:14px;
-      padding:12px 14px;
-      background:#0b1220;
-      color:white;
-      border:1px solid var(--border);
-      font-size:14px;
-    }
-
-    .toolbar button{
       cursor:pointer;
-      transition:.25s ease;
-      font-weight:600;
+      border-radius:12px;
+      padding:10px 12px;
+      font-size:12px;
+      font-weight:800;
+      transition:.2s ease;
+      border:1px solid var(--line2);
+      background:#101a2f;
+      color:#fff;
     }
 
-    .toolbar button:hover{
-      transform:translateY(-2px);
-      background:#162033;
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),#4338ca)}
+    .btn.info{background:linear-gradient(135deg,var(--accent2),#0891b2)}
+    .btn.success{background:linear-gradient(135deg,var(--success),#16a34a);color:#04130a}
+    .btn.warn{background:linear-gradient(135deg,#facc15,var(--warning));color:#221700}
+    .btn.danger{background:linear-gradient(135deg,#fb7185,var(--danger))}
+    .btn.ghost{background:#0b1323}
+
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line2);
+      background:#10192d;
+      color:#dbe7f5;
+      font-size:11px;
+      cursor:pointer;
+      font-weight:700;
     }
 
-    .toolbar .primary{
-      background:linear-gradient(135deg,var(--accent),#16a34a);
-      color:#04130a;
-    }
+    .editor-shell{padding:12px}
 
-    .toolbar .secondary{
-      background:linear-gradient(135deg,var(--accent2),#0284c7);
-      color:#02131b;
-    }
-
-    .toolbar .danger{
-      background:linear-gradient(135deg,#fb7185,var(--danger));
-      color:white;
-    }
-
-    .output-box{
-      min-height:180px;
-      border:1px solid var(--border);
-      border-radius:18px;
-      background:#020817;
-      padding:18px;
-      line-height:1.8;
-      font-size:30px;
-      word-break:break-word;
-      transition:.25s ease;
-    }
-
-    .meta-grid{
-      margin-top:18px;
+    .preview-strip{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:1fr 260px;
       gap:12px;
+      margin-bottom:12px;
     }
 
-    @media (max-width:700px){
-      .meta-grid{
-        grid-template-columns:1fr;
-      }
+    @media (max-width:900px){
+      .preview-strip{grid-template-columns:1fr}
     }
 
-    .mini-card{
-      background:#0b1220;
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:14px;
+    .preview-card{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#0c1528,#0a1220);
+      border-radius:16px;
+      padding:12px;
     }
 
-    .mini-card h4{
+    .preview-card h4{
+      font-size:11px;
+      color:#9fb2d0;
+      text-transform:uppercase;
+      letter-spacing:.5px;
       margin-bottom:8px;
-      font-size:14px;
-      color:#93c5fd;
     }
 
-    .mini-card p{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
-
-    .font-controls{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin:18px 0 10px;
-    }
-
-    .font-controls label{
-      font-size:13px;
-      color:var(--muted);
+    .preview-output{
+      min-height:70px;
+      border-radius:12px;
+      border:1px solid var(--line2);
+      background:#08101d;
+      padding:10px 12px;
       display:flex;
       align-items:center;
-      gap:8px;
-      background:#0b1220;
-      border:1px solid var(--border);
-      padding:10px 12px;
+      font-size:20px;
+      line-height:1.4;
+      word-break:break-word;
+      font-weight:700;
+      white-space:pre-wrap;
+    }
+
+    .media-box{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#0c1528,#0a1220);
+      border-radius:18px;
+      padding:10px;
+    }
+
+    .canvas-wrap{
+      border:1px solid var(--line2);
+      border-radius:18px;
+      overflow:hidden;
+      background:#070d18;
+      width:100%;
+      max-width:920px;
+      margin:0 auto;
+    }
+
+    .canvas-stage{
+      padding:10px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    canvas{
+      display:block;
+      border-radius:14px;
+      max-width:100%;
+    }
+
+    .hidden-input{display:none}
+
+    .status{
+      margin-top:8px;
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .video-preview{
+      width:100%;
+      max-height:130px;
+      margin-top:8px;
       border-radius:12px;
+      border:1px solid var(--line2);
+      background:#000;
+      object-fit:contain;
     }
 
-    .font-controls input[type="range"]{
-      width:140px;
-    }
-
-    .font-grid{
+    .font-list{
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
-      gap:14px;
-      max-height:780px;
+      gap:10px;
+      max-height:900px;
       overflow:auto;
-      padding-right:4px;
     }
 
     .font-card{
-      background:linear-gradient(180deg,#07101f,#0b1220);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:14px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#0d1527,#0b1220);
       cursor:pointer;
-      transition:.25s ease;
-      position:relative;
+      transition:.2s ease;
     }
 
-    .font-card:hover{
-      transform:translateY(-4px);
-      border-color:rgba(255,255,255,.18);
-    }
-
-    .font-card.active{
-      outline:2px solid #22c55e;
-      transform:translateY(-2px);
-    }
+    .font-card:hover{transform:translateY(-2px)}
+    .font-card.active{outline:2px solid #4f46e5}
 
     .font-name{
-      font-weight:700;
-      font-size:14px;
-      margin-bottom:10px;
-      color:#e2e8f0;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:6px;
     }
 
-    .font-preview{
-      font-size:22px;
-      line-height:1.6;
-      margin-bottom:8px;
-    }
-
-    .font-preview.small{
+    .font-demo{
       font-size:18px;
+      line-height:1.45;
     }
 
-    .font-tag{
-      display:inline-block;
-      font-size:11px;
-      padding:5px 8px;
-      border-radius:999px;
-      background:rgba(56,189,248,.12);
-      color:#93c5fd;
-      margin-top:6px;
-    }
-
-    .footer-note{
-      margin-top:16px;
-      font-size:12px;
-      color:#94a3b8;
-      line-height:1.6;
-    }
-
-    .chips{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:12px;
-    }
-
-    .chip{
-      padding:8px 10px;
-      border-radius:999px;
-      font-size:12px;
-      background:#172033;
+    .font-demo.small{
+      font-size:14px;
       color:#cbd5e1;
-      border:1px solid var(--border);
-      cursor:pointer;
+      margin-top:3px;
     }
 
-    .label{
-      font-size:13px;
-      color:#93c5fd;
-      margin-bottom:8px;
-      display:block;
-      font-weight:600;
+    .tag{
+      display:inline-block;
+      margin-top:8px;
+      font-size:10px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(79,70,229,.18);
+      color:#c7d2fe;
+      border:1px solid rgba(79,70,229,.25);
+    }
+
+    .size-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .size-btn{
+      padding:10px;
+      border-radius:12px;
+      border:1px solid var(--line2);
+      background:#10192d;
+      color:#fff;
+      cursor:pointer;
+      font-size:11px;
+      font-weight:700;
+      text-align:center;
+    }
+
+    .size-btn.active{
+      outline:2px solid #4f46e5;
+      background:#18233d;
+    }
+
+    .download-box{
+      margin-top:12px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,.02);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <section class="hero">
-      <h1>Hindi / Marathi Font Converter Studio</h1>
-      <p>
-        Hinglish, English ya Hindi likho. Niche live preview milega. Font card pe click karo aur text alag-alag fonts me dekh lo.
-        Hindi aur Marathi dono Devanagari use karte hain, isliye Marathi-friendly fonts bhi diye gaye hain.
-      </p>
-    </section>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">F</div>
+        <div>
+          <h1>Font Studio Pro Max</h1>
+          <p>50 fonts + spacing + shadow + bg + Hindi / Marathi support</p>
+        </div>
+      </div>
+      <button class="btn success" id="downloadBtnTop">Download PNG</button>
+    </div>
 
     <div class="layout">
-      <!-- LEFT -->
-      <section class="panel">
-        <h2 class="panel-title">Type / Convert Area</h2>
-        <p class="sub">
-          Hinglish likho jaise <b>mera naam surendra hai</b>, phir Hindi ya Marathi-style Devanagari preview dekh lo.
-        </p>
-
-        <label class="label">Input Box</label>
-        <textarea id="inputText" placeholder="Yahan Hinglish / English / Hindi likho...">surendra</textarea>
-
-        <div class="toolbar">
-          <select id="inputMode">
-            <option value="auto">Auto Detect</option>
-            <option value="latin">English / Hinglish</option>
-            <option value="devanagari">Hindi / Marathi (Devanagari)</option>
-          </select>
-
-          <select id="outputMode">
-            <option value="hindi">Convert to Hindi</option>
-            <option value="marathi">Convert to Marathi-style</option>
-            <option value="raw">Keep Original</option>
-          </select>
-
-          <button class="primary" id="convertBtn">Convert</button>
-          <button class="secondary" id="copyBtn">Copy Output</button>
-          <button class="danger" id="clearBtn">Clear</button>
+      <aside class="panel">
+        <div class="panel-head">
+          <h2>MENU</h2>
         </div>
 
-        <div class="chips">
-          <div class="chip" data-sample="surendra">surendra</div>
-          <div class="chip" data-sample="mera naam surendra hai">mera naam surendra hai</div>
-          <div class="chip" data-sample="जिंदगी में मिलने वाला हर शख्स होली सा होता है">जिंदगी में मिलने वाला हर शख्स होली सा होता है</div>
-          <div class="chip" data-sample="सुरेंद्र">सुरेंद्र</div>
-          <div class="chip" data-sample="shubh holi">shubh holi</div>
-        </div>
+        <div class="panel-body">
 
-        <div class="font-controls">
-          <label>
-            Font Size
-            <input type="range" id="fontSize" min="18" max="72" value="30" />
-          </label>
+          <div class="menu-group">
+            <h3>Text Input</h3>
 
-          <label>
-            Font Weight
-            <input type="range" id="fontWeight" min="300" max="900" step="100" value="500" />
-          </label>
+            <label>Type Text</label>
+            <textarea id="inputText">surendra</textarea>
 
-          <label>
-            Letter Space
-            <input type="range" id="letterSpace" min="0" max="8" step="0.5" value="0" />
-          </label>
-        </div>
+            <div class="row" style="margin-top:10px;">
+              <div>
+                <label>Input Mode</label>
+                <select id="inputMode">
+                  <option value="auto">Auto Detect</option>
+                  <option value="latin">English / Hinglish</option>
+                  <option value="devanagari">Hindi / Marathi</option>
+                </select>
+              </div>
+              <div>
+                <label>Output Mode</label>
+                <select id="outputMode">
+                  <option value="hindi">Hindi</option>
+                  <option value="marathi">Marathi Style</option>
+                  <option value="raw">Original</option>
+                </select>
+              </div>
+            </div>
 
-        <label class="label">Output Box</label>
-        <div id="outputBox" class="output-box">सुरेंद्र</div>
+            <div class="row" style="margin-top:10px;">
+              <button class="btn primary" id="convertBtn">Convert</button>
+              <button class="btn info" id="addTextBtn">Show / Add Text</button>
+            </div>
 
-        <div class="meta-grid">
-          <div class="mini-card">
-            <h4>Selected Font</h4>
-            <p id="selectedFontName">Noto Sans Devanagari</p>
+            <div style="margin-top:10px;">
+              <label>Quick Samples</label>
+              <div class="chips">
+                <div class="chip" data-sample="surendra">surendra</div>
+                <div class="chip" data-sample="mera naam surendra hai">mera naam surendra hai</div>
+                <div class="chip" data-sample="सुरेंद्र">सुरेंद्र</div>
+                <div class="chip" data-sample="माझं नाव सुरेंद्र आहे">माझं नाव सुरेंद्र आहे</div>
+              </div>
+            </div>
           </div>
-          <div class="mini-card">
-            <h4>Hindi Preview</h4>
-            <p id="hindiPreview">सुरेंद्र</p>
+
+          <div class="menu-group">
+            <h3>Text Style</h3>
+
+            <div class="row">
+              <div>
+                <label>Text Color</label>
+                <input type="color" id="textColor" value="#ffffff">
+              </div>
+              <div>
+                <label>Text Background</label>
+                <input type="color" id="textBgColor" value="#000000">
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <div>
+                <label>Font Size</label>
+                <input type="number" id="fontSize" value="34" min="10" max="300">
+              </div>
+              <div>
+                <label>Opacity</label>
+                <input type="number" id="opacityInput" value="1" min="0.1" max="1" step="0.1">
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <div>
+                <label>Letter Spacing</label>
+                <input type="number" id="charSpacing" value="0" min="-200" max="1000">
+              </div>
+              <div>
+                <label>Line Height</label>
+                <input type="number" id="lineHeight" value="1.2" min="0.5" max="4" step="0.1">
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <div>
+                <label>Stroke Color</label>
+                <input type="color" id="strokeColor" value="#000000">
+              </div>
+              <div>
+                <label>Stroke Width</label>
+                <input type="number" id="strokeWidth" value="2" min="0" max="20">
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <div>
+                <label>Bg Opacity</label>
+                <input type="number" id="textBgOpacity" value="0.55" min="0" max="1" step="0.05">
+              </div>
+              <div>
+                <label>Text Box Width</label>
+                <input type="number" id="textBoxWidth" value="320" min="100" max="1200">
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <div>
+                <label>Shadow Color</label>
+                <input type="color" id="shadowColor" value="#000000">
+              </div>
+              <div>
+                <label>Shadow Blur</label>
+                <input type="number" id="shadowBlur" value="10" min="0" max="100">
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <div>
+                <label>Shadow X</label>
+                <input type="number" id="shadowX" value="2" min="-100" max="100">
+              </div>
+              <div>
+                <label>Shadow Y</label>
+                <input type="number" id="shadowY" value="2" min="-100" max="100">
+              </div>
+            </div>
+
+            <div class="row3" style="margin-top:10px;">
+              <button class="btn ghost" id="boldBtn">Bold</button>
+              <button class="btn ghost" id="italicBtn">Italic</button>
+              <button class="btn ghost" id="underlineBtn">Underline</button>
+            </div>
           </div>
-          <div class="mini-card">
-            <h4>Marathi-style Preview</h4>
-            <p id="marathiPreview">सुरेंद्र</p>
+
+          <div class="menu-group">
+            <h3>Photo / Video</h3>
+
+            <input class="hidden-input" type="file" id="imageUpload" accept="image/*">
+            <input class="hidden-input" type="file" id="cameraUpload" accept="image/*" capture="environment">
+            <input class="hidden-input" type="file" id="videoUpload" accept="video/*">
+
+            <div class="row">
+              <button class="btn info" id="galleryImageBtn">Select Photo</button>
+              <button class="btn warn" id="cameraBtn">Camera Photo</button>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <button class="btn info" id="videoBtn">Select Video</button>
+              <button class="btn success" id="captureFrameBtn">Add From Video</button>
+            </div>
+
+            <video id="hiddenVideo" class="video-preview" controls playsinline></video>
+            <div class="status" id="mediaStatus">No media selected.</div>
+          </div>
+
+          <div class="menu-group">
+            <h3>Layer</h3>
+
+            <div class="row3">
+              <button class="btn ghost" id="bringFrontBtn">Front</button>
+              <button class="btn ghost" id="sendBackBtn">Back</button>
+              <button class="btn ghost" id="duplicateBtn">Copy</button>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <button class="btn danger" id="deleteSelectedBtn">Delete</button>
+              <button class="btn ghost" id="clearCanvasBtn">Clear All</button>
+            </div>
           </div>
         </div>
+      </aside>
 
-        <p class="footer-note">
-          Tip: Marathi ke liye mostly alag script conversion ki jagah Marathi-supporting Devanagari fonts use kiye jaate hain.
-          Is demo me frontend-only transliteration + font switching diya gaya hai.
-        </p>
-      </section>
+      <main class="panel">
+        <div class="panel-head">
+          <h2>EDITOR</h2>
+        </div>
 
-      <!-- RIGHT -->
-      <section class="panel">
-        <h2 class="panel-title">Font Gallery</h2>
-        <p class="sub">
-          Har card me upar font ka naam hai, aur niche us font me <b>Surendra / सुरेंद्र</b> ka sample.
-          Kisi bhi card pe click karo to niche output box usi font me ho jayega.
-        </p>
+        <div class="editor-shell">
+          <div class="preview-strip">
+            <div class="preview-card">
+              <h4>Converted Output</h4>
+              <div id="previewOutput" class="preview-output">सुरेंद्र</div>
+            </div>
 
-        <div id="fontGrid" class="font-grid"></div>
-      </section>
+            <div class="preview-card">
+              <h4>Canvas Background</h4>
+              <label style="margin-bottom:6px;">Editor Background</label>
+              <input type="color" id="canvasBg" value="#111827">
+              <div class="status" style="margin-top:10px;">
+                Ye canvas background hai. Text ka background alag se style panel me hai.
+              </div>
+            </div>
+          </div>
+
+          <div class="media-box">
+            <div class="canvas-wrap">
+              <div class="canvas-stage">
+                <canvas id="editorCanvas" width="760" height="470"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="editor-toolbar" style="margin-top:12px; display:flex; flex-wrap:wrap; gap:8px;">
+            <button class="btn primary" id="addSampleBtn">Add “सुरेंद्र”</button>
+            <button class="btn ghost" id="leftAlignBtn">Left</button>
+            <button class="btn ghost" id="centerAlignBtn">Center</button>
+            <button class="btn ghost" id="rightAlignBtn">Right</button>
+            <button class="btn success" id="downloadBtn">Download PNG</button>
+          </div>
+
+          <div class="download-box">
+            <label>Download Size</label>
+
+            <div class="size-grid">
+              <button class="size-btn active" data-width="1080" data-height="1080">Instagram Post<br>1080 × 1080</button>
+              <button class="size-btn" data-width="1080" data-height="1350">Instagram Portrait<br>1080 × 1350</button>
+              <button class="size-btn" data-width="1280" data-height="720">YouTube Thumbnail<br>1280 × 720</button>
+              <button class="size-btn" data-width="1080" data-height="1920">Story / Reel<br>1080 × 1920</button>
+              <button class="size-btn" data-width="1920" data-height="1080">Full HD<br>1920 × 1080</button>
+              <button class="size-btn" data-width="800" data-height="800">Square Small<br>800 × 800</button>
+            </div>
+
+            <div class="row" style="margin-top:12px;">
+              <div>
+                <label>Custom Width</label>
+                <input type="number" id="customWidth" value="1080" min="100">
+              </div>
+              <div>
+                <label>Custom Height</label>
+                <input type="number" id="customHeight" value="1080" min="100">
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <button class="btn info" id="applyCustomSizeBtn">Use Custom Size</button>
+              <button class="btn success" id="downloadCustomBtn">Download Custom PNG</button>
+            </div>
+            <div class="status" id="downloadSizeStatus">Selected size: 1080 × 1080</div>
+          </div>
+        </div>
+      </main>
+
+      <aside class="panel">
+        <div class="panel-head">
+          <h2>50 FONTS</h2>
+        </div>
+
+        <div class="panel-body">
+          <div id="fontList" class="font-list"></div>
+        </div>
+      </aside>
     </div>
   </div>
 
   <script>
     const fonts = [
-      { name: "Noto Sans Devanagari", css: "'Noto Sans Devanagari', sans-serif", tag: "Clean Hindi" },
-      { name: "Noto Serif Devanagari", css: "'Noto Serif Devanagari', serif", tag: "Classic Serif" },
-      { name: "Tiro Devanagari Hindi", css: "'Tiro Devanagari Hindi', serif", tag: "Elegant Hindi" },
-      { name: "Hind", css: "'Hind', sans-serif", tag: "Simple UI" },
-      { name: "IBM Plex Sans Devanagari", css: "'IBM Plex Sans Devanagari', sans-serif", tag: "Modern Pro" },
-      { name: "Mukta", css: "'Mukta', sans-serif", tag: "Rounded Clean" },
-      { name: "Baloo 2", css: "'Baloo 2', cursive", tag: "Playful" },
-      { name: "Baloo Bhai 2", css: "'Baloo Bhai 2', cursive", tag: "Bold Round" },
-      { name: "Kalam", css: "'Kalam', cursive", tag: "Handwritten" },
-      { name: "Tillana", css: "'Tillana', cursive", tag: "Decorative" },
-      { name: "Yatra One", css: "'Yatra One', cursive", tag: "Poster Style" },
-      { name: "Rajdhani", css: "'Rajdhani', sans-serif", tag: "Tech Look" },
-      { name: "Teko", css: "'Teko', sans-serif", tag: "Strong Header" },
-      { name: "Khand", css: "'Khand', sans-serif", tag: "Compact Bold" },
-      { name: "Gotu", css: "'Gotu', sans-serif", tag: "Stylish Minimal" },
-      { name: "Poppins", css: "'Poppins', sans-serif", tag: "English UI" },
-      { name: "Inter", css: "'Inter', sans-serif", tag: "Neutral UI" }
+      { name:"Noto Sans Devanagari", css:"'Noto Sans Devanagari'", tag:"Hindi Pro" },
+      { name:"Noto Serif Devanagari", css:"'Noto Serif Devanagari'", tag:"Hindi Serif" },
+      { name:"Tiro Devanagari Hindi", css:"'Tiro Devanagari Hindi'", tag:"Elegant Hindi" },
+      { name:"IBM Plex Sans Devanagari", css:"'IBM Plex Sans Devanagari'", tag:"Modern Hindi" },
+      { name:"Hind", css:"'Hind'", tag:"Clean" },
+      { name:"Mukta", css:"'Mukta'", tag:"Rounded" },
+      { name:"Kalam", css:"'Kalam'", tag:"Handwritten" },
+      { name:"Yatra One", css:"'Yatra One'", tag:"Display" },
+      { name:"Tillana", css:"'Tillana'", tag:"Decorative" },
+      { name:"Baloo 2", css:"'Baloo 2'", tag:"Friendly" },
+      { name:"Rajdhani", css:"'Rajdhani'", tag:"Tech" },
+      { name:"Teko", css:"'Teko'", tag:"Poster" },
+      { name:"Khand", css:"'Khand'", tag:"Compact" },
+      { name:"Gotu", css:"'Gotu'", tag:"Minimal" },
+      { name:"Montserrat", css:"'Montserrat'", tag:"Premium" },
+      { name:"Playfair Display", css:"'Playfair Display'", tag:"Luxury" },
+      { name:"Cinzel", css:"'Cinzel'", tag:"Royal" },
+      { name:"Orbitron", css:"'Orbitron'", tag:"Futuristic" },
+      { name:"Josefin Sans", css:"'Josefin Sans'", tag:"Stylish" },
+      { name:"Poppins", css:"'Poppins'", tag:"UI" },
+      { name:"Oswald", css:"'Oswald'", tag:"Strong" },
+      { name:"Anton", css:"'Anton'", tag:"Bold" },
+      { name:"Bebas Neue", css:"'Bebas Neue'", tag:"Headline" },
+      { name:"Exo 2", css:"'Exo 2'", tag:"Modern" },
+      { name:"Manrope", css:"'Manrope'", tag:"Smooth" },
+      { name:"Urbanist", css:"'Urbanist'", tag:"Soft" },
+      { name:"DM Sans", css:"'DM Sans'", tag:"Simple" },
+      { name:"Rubik", css:"'Rubik'", tag:"Rounded" },
+      { name:"Barlow", css:"'Barlow'", tag:"Professional" },
+      { name:"Prompt", css:"'Prompt'", tag:"Balanced" },
+      { name:"Archivo", css:"'Archivo'", tag:"Editorial" },
+      { name:"Fjalla One", css:"'Fjalla One'", tag:"Poster" },
+      { name:"Abel", css:"'Abel'", tag:"Thin Clean" },
+      { name:"Archivo Black", css:"'Archivo Black'", tag:"Heavy" },
+      { name:"Signika", css:"'Signika'", tag:"Readable" },
+      { name:"Questrial", css:"'Questrial'", tag:"Minimal" },
+      { name:"Asap", css:"'Asap'", tag:"Fast UI" },
+      { name:"Cabin", css:"'Cabin'", tag:"Friendly UI" },
+      { name:"Heebo", css:"'Heebo'", tag:"Neat" },
+      { name:"Kanit", css:"'Kanit'", tag:"Modern Poster" },
+      { name:"Libre Baskerville", css:"'Libre Baskerville'", tag:"Book" },
+      { name:"Cormorant Garamond", css:"'Cormorant Garamond'", tag:"Classic" },
+      { name:"Crimson Text", css:"'Crimson Text'", tag:"Serif" },
+      { name:"Cardo", css:"'Cardo'", tag:"Formal" },
+      { name:"Amatic SC", css:"'Amatic SC'", tag:"Sketch" },
+      { name:"Pacifico", css:"'Pacifico'", tag:"Signature" },
+      { name:"Satisfy", css:"'Satisfy'", tag:"Flow" },
+      { name:"Great Vibes", css:"'Great Vibes'", tag:"Wedding" },
+      { name:"Courgette", css:"'Courgette'", tag:"Curvy" },
+      { name:"Marck Script", css:"'Marck Script'", tag:"Brush" },
+      { name:"Permanent Marker", css:"'Permanent Marker'", tag:"Marker" },
+      { name:"Righteous", css:"'Righteous'", tag:"Logo" },
+      { name:"Fredoka", css:"'Fredoka'", tag:"Fun" }
     ];
+
+    let selectedFont = fonts[0].css;
+    let exportWidth = 1080;
+    let exportHeight = 1080;
+
+    const canvas = new fabric.Canvas("editorCanvas", {
+      preserveObjectStacking: true,
+      backgroundColor: "#111827"
+    });
 
     const inputText = document.getElementById("inputText");
     const inputMode = document.getElementById("inputMode");
     const outputMode = document.getElementById("outputMode");
-    const convertBtn = document.getElementById("convertBtn");
-    const copyBtn = document.getElementById("copyBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const outputBox = document.getElementById("outputBox");
-    const fontGrid = document.getElementById("fontGrid");
-    const selectedFontName = document.getElementById("selectedFontName");
-    const hindiPreview = document.getElementById("hindiPreview");
-    const marathiPreview = document.getElementById("marathiPreview");
+    const previewOutput = document.getElementById("previewOutput");
+    const textColor = document.getElementById("textColor");
+    const textBgColor = document.getElementById("textBgColor");
     const fontSize = document.getElementById("fontSize");
-    const fontWeight = document.getElementById("fontWeight");
-    const letterSpace = document.getElementById("letterSpace");
+    const opacityInput = document.getElementById("opacityInput");
+    const strokeColor = document.getElementById("strokeColor");
+    const strokeWidth = document.getElementById("strokeWidth");
+    const textBgOpacity = document.getElementById("textBgOpacity");
+    const shadowBlur = document.getElementById("shadowBlur");
+    const shadowColor = document.getElementById("shadowColor");
+    const shadowX = document.getElementById("shadowX");
+    const shadowY = document.getElementById("shadowY");
+    const canvasBg = document.getElementById("canvasBg");
+    const hiddenVideo = document.getElementById("hiddenVideo");
+    const mediaStatus = document.getElementById("mediaStatus");
+    const charSpacing = document.getElementById("charSpacing");
+    const lineHeight = document.getElementById("lineHeight");
+    const textBoxWidth = document.getElementById("textBoxWidth");
+    const customWidth = document.getElementById("customWidth");
+    const customHeight = document.getElementById("customHeight");
+    const downloadSizeStatus = document.getElementById("downloadSizeStatus");
 
-    let activeFont = fonts[0];
+    function rgbaFromHex(hex, alpha){
+      const h = hex.replace("#", "");
+      const r = parseInt(h.substring(0,2), 16);
+      const g = parseInt(h.substring(2,4), 16);
+      const b = parseInt(h.substring(4,6), 16);
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
 
-    function isDevanagariText(text) {
+    function isDevanagariText(text){
       return /[\u0900-\u097F]/.test(text);
     }
 
-    function normalizeHindi(text) {
-      return text
-        .replace(/\bmarathi\b/gi, "मराठी")
-        .replace(/\bhindi\b/gi, "हिंदी");
-    }
+    function translitLatinToHindi(text){
+      try{
+        const result = Sanscript.t(text, "itrans", "devanagari");
+        if(result && result !== text) return result;
+      }catch(e){}
 
-    function translitLatinToHindi(text) {
-      try {
-        // Basic usage with sanscript
-        // ITRANS-style transliteration works better than natural Hinglish,
-        // so we also add a small fallback dictionary below.
-        let result = Sanscript.t(text, "itrans", "devanagari");
-        if (result && result !== text) return result;
-      } catch (e) {}
-
-      // fallback smart replacements for common words
       const map = {
-        "surendra": "सुरेंद्र",
-        "mera": "मेरा",
-        "naam": "नाम",
-        "hai": "है",
-        "main": "मैं",
-        "mai": "मैं",
-        "shubh": "शुभ",
-        "holi": "होली",
-        "namaste": "नमस्ते",
-        "dost": "दोस्त",
-        "pyar": "प्यार",
-        "zindagi": "ज़िंदगी",
-        "jindagi": "जिंदगी"
+        "surendra":"सुरेंद्र",
+        "mera":"मेरा",
+        "naam":"नाम",
+        "hai":"है",
+        "main":"मैं",
+        "mai":"मैं",
+        "namaste":"नमस्ते",
+        "shubh":"शुभ",
+        "holi":"होली",
+        "mera naam":"मेरा नाम"
       };
 
-      return text.split(/\b/).map(token => {
-        const key = token.toLowerCase();
-        return map[key] || token;
-      }).join("");
+      let output = text;
+      Object.keys(map).forEach(key => {
+        const regex = new RegExp(key, "gi");
+        output = output.replace(regex, map[key]);
+      });
+      return output;
     }
 
-    function hindiToMarathiStyle(text) {
-      // Hindi and Marathi use Devanagari.
-      // Frontend-only practical approach: keep script same, normalize a few words if desired.
+    function hindiToMarathiStyle(text){
       return text
-        .replace(/हिंदी/g, "मराठी")
         .replace(/मेरा नाम/g, "माझं नाव")
         .replace(/मेरा/g, "माझं")
         .replace(/नाम/g, "नाव")
-        .replace(/है/g, "आहे");
+        .replace(/है/g, "आहे")
+        .replace(/मैं/g, "मी")
+        .replace(/नमस्ते/g, "नमस्कार")
+        .replace(/हिंदी/g, "मराठी");
     }
 
-    function convertText() {
+    function convertTextValue(){
       const raw = inputText.value.trim();
-      if (!raw) {
-        outputBox.textContent = "";
-        hindiPreview.textContent = "";
-        marathiPreview.textContent = "";
-        return;
+
+      if(!raw){
+        previewOutput.textContent = "सुरेंद्र";
+        previewOutput.style.fontFamily = selectedFont;
+        return "";
       }
 
-      let detectedMode = inputMode.value;
-      if (detectedMode === "auto") {
-        detectedMode = isDevanagariText(raw) ? "devanagari" : "latin";
+      let mode = inputMode.value;
+      if(mode === "auto"){
+        mode = isDevanagariText(raw) ? "devanagari" : "latin";
       }
 
-      let hindiText = raw;
-      if (detectedMode === "latin") {
-        hindiText = translitLatinToHindi(raw);
-      } else {
-        hindiText = normalizeHindi(raw);
-      }
+      const hindiText = mode === "latin" ? translitLatinToHindi(raw) : raw;
+      const marathiText = hindiToMarathiStyle(hindiText);
 
-      let marathiText = hindiToMarathiStyle(hindiText);
       let finalText = raw;
-
-      if (outputMode.value === "hindi") finalText = hindiText;
-      else if (outputMode.value === "marathi") finalText = marathiText;
+      if(outputMode.value === "hindi") finalText = hindiText;
+      else if(outputMode.value === "marathi") finalText = marathiText;
       else finalText = raw;
 
-      outputBox.textContent = finalText;
-      hindiPreview.textContent = hindiText;
-      marathiPreview.textContent = marathiText;
+      previewOutput.textContent = finalText || "सुरेंद्र";
+      previewOutput.style.fontFamily = selectedFont;
+      previewOutput.style.letterSpacing = (parseInt(charSpacing.value, 10) / 20) + "px";
+      previewOutput.style.lineHeight = lineHeight.value;
+      previewOutput.style.color = textColor.value;
+      previewOutput.style.background = rgbaFromHex(textBgColor.value, parseFloat(textBgOpacity.value));
+
+      return finalText;
     }
 
-    function applyFont(fontObj) {
-      activeFont = fontObj;
-      outputBox.style.fontFamily = fontObj.css;
-      selectedFontName.textContent = fontObj.name;
-      document.querySelectorAll(".font-card").forEach(card => {
-        card.classList.remove("active");
-        if (card.dataset.fontName === fontObj.name) {
-          card.classList.add("active");
-        }
+    function getSelectedObject(){
+      return canvas.getActiveObject();
+    }
+
+    function buildShadow(){
+      return new fabric.Shadow({
+        color: shadowColor.value,
+        blur: parseInt(shadowBlur.value, 10),
+        offsetX: parseInt(shadowX.value, 10),
+        offsetY: parseInt(shadowY.value, 10)
       });
     }
 
-    function renderFontCards() {
-      fontGrid.innerHTML = "";
+    function bringTextsToFront(){
+      canvas.getObjects().forEach(obj => {
+        if(obj.type === "textbox" || obj.type === "i-text"){
+          canvas.bringToFront(obj);
+        }
+      });
+      canvas.renderAll();
+    }
+
+    function addTextToCanvas(customText = null){
+      const converted = convertTextValue();
+      const value = customText || converted || "सुरेंद्र";
+
+      const textbox = new fabric.Textbox(value, {
+        left: 70,
+        top: 70,
+        width: parseInt(textBoxWidth.value, 10),
+        fontFamily: selectedFont,
+        fontSize: parseInt(fontSize.value, 10),
+        fill: textColor.value,
+        stroke: strokeColor.value,
+        strokeWidth: parseInt(strokeWidth.value, 10),
+        textBackgroundColor: rgbaFromHex(textBgColor.value, parseFloat(textBgOpacity.value)),
+        opacity: parseFloat(opacityInput.value),
+        editable: true,
+        padding: 10,
+        lineHeight: parseFloat(lineHeight.value),
+        charSpacing: parseInt(charSpacing.value, 10),
+        cornerStyle: "circle",
+        cornerColor: "#06b6d4",
+        borderColor: "#4f46e5",
+        transparentCorners: false,
+        shadow: buildShadow()
+      });
+
+      canvas.add(textbox);
+      canvas.setActiveObject(textbox);
+      canvas.bringToFront(textbox);
+      canvas.renderAll();
+    }
+
+    function applyStylesToSelected(){
+      const obj = getSelectedObject();
+      if(!obj) return;
+
+      if(obj.type === "textbox" || obj.type === "i-text"){
+        obj.set({
+          fontFamily: selectedFont,
+          fontSize: parseInt(fontSize.value, 10),
+          fill: textColor.value,
+          stroke: strokeColor.value,
+          strokeWidth: parseInt(strokeWidth.value, 10),
+          opacity: parseFloat(opacityInput.value),
+          textBackgroundColor: rgbaFromHex(textBgColor.value, parseFloat(textBgOpacity.value)),
+          shadow: buildShadow(),
+          charSpacing: parseInt(charSpacing.value, 10),
+          lineHeight: parseFloat(lineHeight.value),
+          width: parseInt(textBoxWidth.value, 10)
+        });
+        canvas.bringToFront(obj);
+        canvas.renderAll();
+      }
+      convertTextValue();
+    }
+
+    function renderFontList(){
+      const list = document.getElementById("fontList");
+      list.innerHTML = "";
+
       fonts.forEach((font, index) => {
         const card = document.createElement("div");
         card.className = "font-card" + (index === 0 ? " active" : "");
-        card.dataset.fontName = font.name;
         card.innerHTML = `
           <div class="font-name">${font.name}</div>
-          <div class="font-preview" style="font-family:${font.css};">Surendra</div>
-          <div class="font-preview small" style="font-family:${font.css};">सुरेंद्र</div>
-          <span class="font-tag">${font.tag}</span>
+          <div class="font-demo" style="font-family:${font.css};">Surendra</div>
+          <div class="font-demo small" style="font-family:${font.css};">सुरेंद्र</div>
+          <span class="tag">${font.tag}</span>
         `;
+
         card.addEventListener("click", () => {
-          applyFont(font);
-          convertText();
+          document.querySelectorAll(".font-card").forEach(c => c.classList.remove("active"));
+          card.classList.add("active");
+          selectedFont = font.css;
+          previewOutput.style.fontFamily = selectedFont;
+          applyStylesToSelected();
+          convertTextValue();
         });
-        fontGrid.appendChild(card);
+
+        list.appendChild(card);
       });
     }
 
-    function bindControls() {
-      convertBtn.addEventListener("click", convertText);
+    function fitImageOnCanvas(img){
+      const maxW = canvas.getWidth() * 0.95;
+      const maxH = canvas.getHeight() * 0.95;
 
-      inputText.addEventListener("input", convertText);
-      inputMode.addEventListener("change", convertText);
-      outputMode.addEventListener("change", convertText);
+      if(img.width > maxW) img.scaleToWidth(maxW);
+      if((img.height * img.scaleY) > maxH) img.scaleToHeight(maxH);
 
-      copyBtn.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText(outputBox.textContent);
-          copyBtn.textContent = "Copied!";
-          setTimeout(() => copyBtn.textContent = "Copy Output", 1200);
-        } catch (e) {
-          alert("Copy failed");
+      img.set({
+        left: (canvas.getWidth() - img.getScaledWidth()) / 2,
+        top: (canvas.getHeight() - img.getScaledHeight()) / 2
+      });
+    }
+
+    function loadImageToCanvas(dataUrl, msg){
+      fabric.Image.fromURL(dataUrl, function(img){
+        img.set({
+          cornerColor: "#06b6d4",
+          borderColor: "#4f46e5",
+          transparentCorners: false
+        });
+
+        fitImageOnCanvas(img);
+        canvas.add(img);
+        canvas.sendToBack(img);
+        bringTextsToFront();
+        mediaStatus.textContent = msg;
+      }, { crossOrigin: "anonymous" });
+    }
+
+    function syncControlsFromObject(){
+      const obj = getSelectedObject();
+      if(!obj) return;
+
+      if(obj.type === "textbox" || obj.type === "i-text"){
+        fontSize.value = obj.fontSize || 34;
+        opacityInput.value = obj.opacity ?? 1;
+        textColor.value = obj.fill || "#ffffff";
+        strokeColor.value = obj.stroke || "#000000";
+        strokeWidth.value = obj.strokeWidth || 2;
+        charSpacing.value = obj.charSpacing || 0;
+        lineHeight.value = obj.lineHeight || 1.2;
+        textBoxWidth.value = Math.round(obj.width || 320);
+      }
+    }
+
+    function setDownloadSize(width, height){
+      exportWidth = parseInt(width, 10);
+      exportHeight = parseInt(height, 10);
+      downloadSizeStatus.textContent = `Selected size: ${exportWidth} × ${exportHeight}`;
+      customWidth.value = exportWidth;
+      customHeight.value = exportHeight;
+    }
+
+    function downloadCanvas(width = exportWidth, height = exportHeight){
+      canvas.discardActiveObject();
+      canvas.renderAll();
+
+      const originalWidth = canvas.getWidth();
+      const originalHeight = canvas.getHeight();
+      const multiplier = Math.min(width / originalWidth, height / originalHeight);
+
+      const dataURL = canvas.toDataURL({
+        format: "png",
+        quality: 1,
+        multiplier: multiplier
+      });
+
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = `font-studio-${width}x${height}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    document.getElementById("convertBtn").addEventListener("click", convertTextValue);
+    inputText.addEventListener("input", convertTextValue);
+    inputMode.addEventListener("change", convertTextValue);
+    outputMode.addEventListener("change", convertTextValue);
+
+    document.getElementById("addTextBtn").addEventListener("click", () => {
+      const text = convertTextValue();
+      addTextToCanvas(text || "सुरेंद्र");
+    });
+
+    document.getElementById("addSampleBtn").addEventListener("click", () => addTextToCanvas("सुरेंद्र"));
+
+    document.querySelectorAll(".chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        inputText.value = chip.dataset.sample;
+        convertTextValue();
+      });
+    });
+
+    [
+      textColor, textBgColor, fontSize, opacityInput, strokeColor, strokeWidth,
+      textBgOpacity, shadowBlur, shadowColor, shadowX, shadowY,
+      charSpacing, lineHeight, textBoxWidth
+    ].forEach(el => {
+      el.addEventListener("input", applyStylesToSelected);
+    });
+
+    canvasBg.addEventListener("input", () => {
+      canvas.setBackgroundColor(canvasBg.value, canvas.renderAll.bind(canvas));
+    });
+
+    document.getElementById("boldBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+      obj.set("fontWeight", obj.fontWeight === "bold" ? "normal" : "bold");
+      canvas.renderAll();
+    });
+
+    document.getElementById("italicBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+      obj.set("fontStyle", obj.fontStyle === "italic" ? "normal" : "italic");
+      canvas.renderAll();
+    });
+
+    document.getElementById("underlineBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+      obj.set("underline", !obj.underline);
+      canvas.renderAll();
+    });
+
+    document.getElementById("leftAlignBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+      obj.set("textAlign", "left");
+      canvas.renderAll();
+    });
+
+    document.getElementById("centerAlignBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+      obj.set("textAlign", "center");
+      canvas.renderAll();
+    });
+
+    document.getElementById("rightAlignBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+      obj.set("textAlign", "right");
+      canvas.renderAll();
+    });
+
+    document.getElementById("bringFrontBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+      canvas.bringToFront(obj);
+      canvas.renderAll();
+    });
+
+    document.getElementById("sendBackBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+      canvas.sendToBack(obj);
+      bringTextsToFront();
+      canvas.renderAll();
+    });
+
+    document.getElementById("duplicateBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+
+      obj.clone(clone => {
+        clone.set({
+          left: (obj.left || 0) + 20,
+          top: (obj.top || 0) + 20
+        });
+        canvas.add(clone);
+        canvas.setActiveObject(clone);
+        if(clone.type === "textbox" || clone.type === "i-text"){
+          canvas.bringToFront(clone);
         }
+        canvas.renderAll();
       });
+    });
 
-      clearBtn.addEventListener("click", () => {
-        inputText.value = "";
-        outputBox.textContent = "";
-        hindiPreview.textContent = "";
-        marathiPreview.textContent = "";
+    document.getElementById("deleteSelectedBtn").addEventListener("click", () => {
+      const obj = getSelectedObject();
+      if(!obj) return;
+      canvas.remove(obj);
+      canvas.renderAll();
+    });
+
+    document.getElementById("clearCanvasBtn").addEventListener("click", () => {
+      canvas.clear();
+      canvas.setBackgroundColor(canvasBg.value, canvas.renderAll.bind(canvas));
+      mediaStatus.textContent = "Canvas cleared.";
+    });
+
+    document.getElementById("galleryImageBtn").addEventListener("click", () => {
+      document.getElementById("imageUpload").click();
+    });
+
+    document.getElementById("cameraBtn").addEventListener("click", () => {
+      document.getElementById("cameraUpload").click();
+    });
+
+    document.getElementById("videoBtn").addEventListener("click", () => {
+      document.getElementById("videoUpload").click();
+    });
+
+    document.getElementById("imageUpload").addEventListener("change", function(e){
+      const file = e.target.files[0];
+      if(!file) return;
+
+      const reader = new FileReader();
+      reader.onload = ev => loadImageToCanvas(ev.target.result, "Gallery image loaded.");
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById("cameraUpload").addEventListener("change", function(e){
+      const file = e.target.files[0];
+      if(!file) return;
+
+      const reader = new FileReader();
+      reader.onload = ev => loadImageToCanvas(ev.target.result, "Camera image loaded.");
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById("videoUpload").addEventListener("change", function(e){
+      const file = e.target.files[0];
+      if(!file) return;
+
+      const url = URL.createObjectURL(file);
+      hiddenVideo.src = url;
+      hiddenVideo.load();
+      mediaStatus.textContent = "Video loaded. Play ya pause karke Add From Video dabao.";
+    });
+    document.getElementById("captureFrameBtn").addEventListener("click", () => {
+      if(!hiddenVideo.src){
+        alert("Pehle video select karo.");
+        return;
+      }
+
+      const w = hiddenVideo.videoWidth || 640;
+      const h = hiddenVideo.videoHeight || 360;
+
+      const temp = document.createElement("canvas");
+      temp.width = w;
+      temp.height = h;
+
+      const ctx = temp.getContext("2d");
+      ctx.drawImage(hiddenVideo, 0, 0, w, h);
+
+      loadImageToCanvas(temp.toDataURL("image/png"), "Video frame added to canvas.");
+    });
+
+    document.querySelectorAll(".size-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        setDownloadSize(btn.dataset.width, btn.dataset.height);
       });
+    });
 
-      fontSize.addEventListener("input", () => {
-        outputBox.style.fontSize = fontSize.value + "px";
-      });
+    document.getElementById("applyCustomSizeBtn").addEventListener("click", () => {
+      const w = parseInt(customWidth.value, 10);
+      const h = parseInt(customHeight.value, 10);
 
-      fontWeight.addEventListener("input", () => {
-        outputBox.style.fontWeight = fontWeight.value;
-      });
+      if(!w || !h || w < 100 || h < 100){
+        alert("Valid custom width aur height dalo.");
+        return;
+      }
 
-      letterSpace.addEventListener("input", () => {
-        outputBox.style.letterSpacing = letterSpace.value + "px";
-      });
+      document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+      setDownloadSize(w, h);
+    });
 
-      document.querySelectorAll(".chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-          inputText.value = chip.dataset.sample;
-          convertText();
-        });
-      });
-    }
+    document.getElementById("downloadCustomBtn").addEventListener("click", () => {
+      const w = parseInt(customWidth.value, 10);
+      const h = parseInt(customHeight.value, 10);
 
-    renderFontCards();
-    bindControls();
-    applyFont(fonts[0]);
-    convertText();
+      if(!w || !h || w < 100 || h < 100){
+        alert("Valid custom width aur height dalo.");
+        return;
+      }
+
+      downloadCanvas(w, h);
+    });
+
+    document.getElementById("downloadBtn").addEventListener("click", () => downloadCanvas());
+    document.getElementById("downloadBtnTop").addEventListener("click", () => downloadCanvas());
+
+    canvas.on("selection:created", syncControlsFromObject);
+    canvas.on("selection:updated", syncControlsFromObject);
+
+    renderFontList();
+    convertTextValue();
+    canvas.setBackgroundColor("#111827", canvas.renderAll.bind(canvas));
+    addTextToCanvas("सुरेंद्र");
+    setDownloadSize(1080, 1080);
   </script>
 </body>
 </html>
